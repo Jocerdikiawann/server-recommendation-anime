@@ -1,0 +1,36 @@
+version: '3.7'
+
+services:
+  app:
+    container_name: 'api'
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/usr/src/app/
+    depends_on:
+      - tensorflow-serving
+    networks:
+      - api-networks
+  tensorflow-serving:
+    image: bitnami/tensorflow-serving:latest
+    ports:
+      - 8501:8501
+    volumes:
+      - 'data:/bitnami'
+      - './conf:/bitnami/tensorflow-serving/conf/'
+      - './models/rps_model:/bitnami/model-data'
+    expose:
+      - 8501
+    environment:
+      - TENSORFLOW_SERVING_MODEL_NAME=rps_model
+    networks:
+      - api-networks
+volumes:
+  data:
+    driver: local
+networks:
+  api-networks:
+    driver: bridge
