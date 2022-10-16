@@ -20,6 +20,6 @@ jobs:
       - name: Build the Docker image
         run: docker-compose up --build -d
       - name: docker tag
-        run: docker tag recommender_system ${{secrets.DOCKER_USER}}/server_recommendation_anime
+        run: docker tag recommender_system:local
       - name: Docker Push
-        run: docker push ${{secrets.DOCKER_USER}}/server_recommendation_anime:latest
+        run: docker push ${{secrets.DOCKER_USER}}/server_recommendation_anime
