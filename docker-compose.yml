@@ -10,11 +10,12 @@ services:
       - 3000:3000
     volumes:
       - .:/usr/src/app/
-    depends_on:
-      - tensorflow-serving
+    # depends_on:
+    #   - tensorflow-serving
     networks:
       - api-networks
   tensorflow-serving:
+    container_name: predict
     image: bitnami/tensorflow-serving:latest
     ports:
       - 8501:8501
